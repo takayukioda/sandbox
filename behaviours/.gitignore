@@ -1,0 +1,11 @@
+# Backups
+*~
+.*.swp
+
+# Garbages
+.DS_Store
+Thumbs.db
+
+# java / scala
+java/**/*.class
+scala/**/*.class
