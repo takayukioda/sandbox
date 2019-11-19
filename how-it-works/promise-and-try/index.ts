@@ -35,8 +35,10 @@ export const Save = async (n: number): Promise<number> => {
   return n
 }
 
-(async () => {
+(async (go: boolean) => {
+  if (!go) return;
   try {
+    console.log('== Await at last ==');
     const tc1 = TryController(1);
     const tc2 = TryController(2);
     const tc3 = TryController(3); // cannot save value
@@ -52,4 +54,19 @@ export const Save = async (n: number): Promise<number> => {
     console.log('Found an error');
     console.error(err.message);
   }
-})()
+})(false);
+
+(async (go: boolean) => {
+  if (!go) return;
+  try {
+    console.log('== Await for each ==');
+    await TryController(1);
+    await TryController(2);
+    await TryController(3); // cannot save value
+    await TryController(4);
+    await TryController(5); // invalid value
+  } catch (err) {
+    console.log('Found an error');
+    console.error(err.message);
+  }
+})(true);
