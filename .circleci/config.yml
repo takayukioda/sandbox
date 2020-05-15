@@ -1,0 +1,46 @@
+workspace: &workspace
+  /tmp/workspace
+
+version: 2.1
+executors:
+  default:
+    docker:
+      - image: ubuntu:20.04
+    working_directory: *workspace
+jobs:
+  sandbox-export:
+    executor: default
+    steps:
+      - checkout
+      - run: apt-get update && apt-get install -y git
+      - run:
+          name: one-time env with use directly
+          command: REVISION=`git rev-parse --short HEAD` echo $REVISION
+      - run:
+          name: one-time env with shell-script
+          command: REVISION=`git rev-parse --short HEAD` sh .circleci/echo-revision.sh
+      - run:
+          name: export env and use directly
+          command: |
+            export REVISION=`git rev-parse --short HEAD`
+            echo $REVISION
+      - run:
+          name: export env and run shell-script
+          command: |
+            export REVISION=`git rev-parse --short HEAD`
+            sh .circleci/echo-revision.sh
+      - run:
+          name: define variable and use directly
+          command: |
+            REVISION=`git rev-parse --short HEAD`
+            echo $REVISION
+      - run:
+          name: define variable and run shell-script
+          command: |
+            REVISION=`git rev-parse --short HEAD`
+            sh .circleci/echo-revision.sh
+workflows:
+  version: 2
+  run-sandbox-export:
+    jobs:
+      - sandbox-export
