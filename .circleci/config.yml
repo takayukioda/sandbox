@@ -1,0 +1,14 @@
+workspace: &workspace
+  /tmp/workspace
+
+version: 2.1
+executors:
+  default:
+    docker:
+      - image: ubuntu:20.04
+    working_directory: *workspace
+jobs:
+  envvar:
+    executors: default
+    steps:
+      - run: REVISION=`git rev-parse HEAD --short` sh .circleci/echo-revision.sh
