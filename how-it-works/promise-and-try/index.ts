@@ -5,6 +5,7 @@ export const Controller = async (n: number): Promise<number | undefined> => {
   AsyncService(5).catch(() => console.log('Got an error; continuing the process'));
   await TheService(4);
   
+  console.log('<-- Controller')
   return core
 }
 
@@ -15,13 +16,16 @@ export const TheService = async (n: number): Promise<number> => {
     throw new Error(`Validation not ok: ${n}`)
   }
 
-  return Save(n % 5)
+  const save = Save(n % 5)
+
+  console.log('<-- TheService')
+  return save
 }
 
 export const AsyncService = async (n: number): Promise<number> => {
   console.log('---> AsyncService')
 
-  return new Promise((resolve, reject) => {
+  const promise = new Promise<number>((resolve, reject) => {
     setTimeout(() => {
       if (SyncValidate(n)) {
         console.log('AsyncService resolved');
@@ -31,16 +35,22 @@ export const AsyncService = async (n: number): Promise<number> => {
       return reject(n);
     }, n * 100)
   });
+  console.log('<--- AsyncService')
+  return promise
 }
 
 export const SyncValidate = (n: number): boolean => {
   console.log('----> SyncValidate');
-  return n % 5 !== 0;
+  const bool = n % 5 !== 0;
+  console.log('<---- SyncValidate');
+  return bool
 }
 
 export const AsyncValidate = async (n: number): Promise<boolean> => {
   console.log('----> AsyncValidate');
-  return n % 5 !== 0;
+  const bool = n % 5 !== 0;
+  console.log('<---- AsyncValidate');
+  return bool
 }
 
 export const Save = async (n: number): Promise<number> => {
@@ -48,7 +58,9 @@ export const Save = async (n: number): Promise<number> => {
   if (n % 3 === 0) {
     throw new Error(`Oooops, cannot save this value! ${n}`)
   }
+  console.log('===== Save', n)
 
+  console.log('<---- Save')
   return n
 }
 
