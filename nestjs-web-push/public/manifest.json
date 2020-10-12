@@ -1,0 +1,7 @@
+{
+  "name": "nestjs web push",
+  "short_name": "webpush",
+  "Scope": "/",
+  "start_url": "/index.html",
+  "splash_pages": null
+}
