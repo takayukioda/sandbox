@@ -11,8 +11,8 @@ jobs:
   sandbox-export:
     executor: default
     steps:
-      - checkout
       - run: apt-get update && apt-get install -y git
+      - checkout
       - run:
           name: one-time env with use directly
           command: REVISION=`git rev-parse --short HEAD` echo $REVISION
