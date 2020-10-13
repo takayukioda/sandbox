@@ -53,8 +53,7 @@
 
 	const push = () => {
 		if (!subscription) {
-			console.log("Set subscription before push");
-			return
+			console.log("Subscription is not set, so this browser can't receive web push.");
 		}
 		return fetch("/push-simple", {
 			method: "POST",
