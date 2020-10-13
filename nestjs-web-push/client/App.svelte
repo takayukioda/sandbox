@@ -1,4 +1,5 @@
 <script lang="ts">
+	export let serviceWorkerSupported: boolean;
 	import { urlBase64ToUint8Array } from './helper.ts';
 	const publicVapidKey = 'BO3RaGZf5xBIxvn5ZyHtznkli42k2WMAAxCAo5nVifW4rQi9ReZSHhybw1v31KgklUP2SLSxcBKpucZ-t8YMJ9M';
 	let subscription: PushSubscription;
@@ -74,7 +75,9 @@
 		<h1>Web push experiment</h1>
 		<section>
 			<h2>Subscribe to web push</h2>
-			<button on:click={subscribe}>Subscribe</button>
+			<button
+				disabled={!serviceWorkerSupported}
+				on:click={subscribe}>Subscribe</button>
 			<div class="row">
 				<div class="twelve columns">
 					<table>
@@ -121,4 +124,8 @@
 	</main>
 
 <style>
+	button[disabled] {
+		color: #fff;
+		background-color: #888;
+	}
 </style>

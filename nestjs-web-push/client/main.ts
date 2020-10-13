@@ -2,6 +2,9 @@ import App from './App.svelte';
 
 const app = new App({
 	target: document.body,
+  props: {
+    serviceWorkerSupported: 'serviceWorker' in navigator,
+  }
 });
 
 if ('serviceWorker' in navigator) {
@@ -11,7 +14,7 @@ if ('serviceWorker' in navigator) {
       console.log('Service worker registration failed:', error);
     });
 } else {
-  console.log('Service workders are not supported.');
+  console.log('Service workers are not supported.');
 }
 
 export default app;
